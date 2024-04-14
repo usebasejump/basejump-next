@@ -5,7 +5,7 @@ import BasejumpLogo from "./basejump-logo";
 export default function Header() {
   return (
     <div className="flex flex-col gap-16 items-center">
-      <div className="flex gap-8 justify-center items-center">
+      <div className="flex flex-col md:flex-row gap-8 justify-center items-center">
           <a
               href="https://usebasejump.com?utm_source=create-next-app&utm_medium=template&utm_term=basejump"
               target="_blank"
