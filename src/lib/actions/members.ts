@@ -1,5 +1,6 @@
 'use server'
 
+import { redirect } from "next/navigation";
 import { createClient } from "../supabase/server";
 
 export async function removeTeamMember(prevState: any, formData: FormData) {
@@ -7,6 +8,7 @@ export async function removeTeamMember(prevState: any, formData: FormData) {
 
     const userId = formData.get("userId") as string;
     const accountId = formData.get("accountId") as string;
+    const returnUrl = formData.get("returnUrl") as string;
     const supabase = createClient();
 
     const { error } = await supabase.rpc('remove_account_member', {
@@ -19,6 +21,8 @@ export async function removeTeamMember(prevState: any, formData: FormData) {
             message: error.message
         };
     }
+
+    redirect(returnUrl);
 };
 
 
@@ -27,7 +31,8 @@ export async function updateTeamMemberRole(prevState: any, formData: FormData) {
 
     const userId = formData.get("userId") as string;
     const accountId = formData.get("accountId") as string;
-    const newAccountRole = formData.get("newAccountRole") as string;
+    const newAccountRole = formData.get("accountRole") as string;
+    const returnUrl = formData.get("returnUrl") as string;
     const makePrimaryOwner = formData.get("makePrimaryOwner");
 
     const supabase = createClient();
@@ -44,4 +49,6 @@ export async function updateTeamMemberRole(prevState: any, formData: FormData) {
             message: error.message
         };
     }
+
+    redirect(returnUrl);
 };

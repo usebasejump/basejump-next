@@ -16,6 +16,9 @@ export default async function ManageTeamMembers({accountId}: Props) {
         account_id: accountId
     });
 
+    const session = await supabaseClient.auth.getSession();
+    const isPrimaryOwner = members?.find((member: any) => member.user_id === session?.data.session?.user.id)?.is_primary_owner;
+
 
     return (
         <Card>
@@ -36,7 +39,7 @@ export default async function ManageTeamMembers({accountId}: Props) {
                                     <Badge variant={member.account_role === 'owner' ? 'default' : 'outline'}>{member.is_primary_owner ? 'Primary Owner' : member.account_role}</Badge></div>
                                 </TableCell>
                                 <TableCell className="text-right">
-                                    {!Boolean(member.is_primary_owner) && <TeamMemberOptions />}
+                                    {!Boolean(member.is_primary_owner) && <TeamMemberOptions teamMember={member} accountId={accountId} isPrimaryOwner={isPrimaryOwner} />}
                                 </TableCell>
                             </TableRow>
                         ))}

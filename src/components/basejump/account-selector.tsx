@@ -106,7 +106,6 @@ export default function AccountSelector({ className, accountId, onAccountSelecte
                                                 if (onAccountSelected) {
                                                     onAccountSelected(team)
                                                 }
-                                                console.log('setting to team ', team)
 
                                                 setOpen(false)
                                             }}

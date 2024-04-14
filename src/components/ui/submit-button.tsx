@@ -18,7 +18,7 @@ const initialState = {
 
 export function SubmitButton({ children, formAction, errorMessage, pendingText = "Submitting...", ...props }: Props) {
   const { pending, action } = useFormStatus();
-  const [state, internalFormAction] = useFormState(formAction, initialState)
+  const [state, internalFormAction] = useFormState(formAction, initialState);
 
 
   const isPending = pending && action === internalFormAction;
