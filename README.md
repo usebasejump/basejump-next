@@ -17,9 +17,16 @@ Adds a Nextjs starter app on top of [Basejump core](https://github.com/usebaseju
 - **Billing**: Basejump provides out of the box billing support for Stripe, but you can add your own providers easily.
   If you do, please consider contributing them so others can benefit!
 
-## Quick Start (recommended)
+## Quick Start
 
-Check out the getting started guide at [usebasejump.com](https://usebasejump.com).
+Once you've gotten your [Basejump project setup](https://github.com/usebasejump/basejump), you can add the Nextjs starter by running:
+
+```bash
+yarn create next-app -e https://github.com/usebasejump/basejump-next
+```
+
+Then add your Supabase URL and anon key to your `.env.local` file. There's an example in the `.env.example` file.
+
 
 ## Contributing
 
