@@ -4,6 +4,8 @@ Adds a Nextjs starter app on top of [Basejump core](https://github.com/usebaseju
 
 [Learn more at usebasejump.com](https://usebasejump.com). Ask questions [on X / Twitter](https://twitter.com/tiniscule)
 
+![Image Description](./public/images/basejump-team-page.png)
+
 ## Features
 
 - **Basic Dashboard**: A basic dashboard implementation restricted to authenticated users
