@@ -16,8 +16,8 @@ export default async function ManageTeamMembers({accountId}: Props) {
         account_id: accountId
     });
 
-    const session = await supabaseClient.auth.getSession();
-    const isPrimaryOwner = members?.find((member: any) => member.user_id === session?.data.session?.user.id)?.is_primary_owner;
+    const {data} = await supabaseClient.auth.getUser();
+    const isPrimaryOwner = members?.find((member: any) => member.user_id === data?.user?.id)?.is_primary_owner;
 
 
     return (
