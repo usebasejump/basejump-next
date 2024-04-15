@@ -1,8 +1,3 @@
-/***
- * THESE FUNCTIONS ARE FOR TESTING PURPOSES ONLY.
- * TO SETUP ON YOUR OWN, HEAD TO https://usebasejump.com
- */
-
 import {serve} from "https://deno.land/std@0.168.0/http/server.ts";
 import {billingWebhooksWrapper, stripeWebhookHandler} from "https://deno.land/x/basejump@v2.0.3/billing-functions/mod.ts";
 
