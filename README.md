@@ -34,9 +34,10 @@ Adds a Nextjs starter app on top of [Basejump core](https://github.com/usebaseju
 
 ## Quick Start
 
-1. Create a `.env.local` copy of the `.env.example` file with the correct values for Supabase
-2. Run `yarn install`
-3. Run `yarn dev`
+1. Run `yarn install`
+2. Run `supabase start`
+3. Create a `.env.local` copy of the `.env.example` file with the correct values for Supabase
+4. Run `yarn dev`
 
 When you're ready to work on billing, you'll need to set up a Stripe account and add your Stripe keys to your `supabase/functions/.env` file. There's an example file you can copy.
 
