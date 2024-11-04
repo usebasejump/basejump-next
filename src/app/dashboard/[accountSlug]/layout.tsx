@@ -2,8 +2,18 @@ import {createClient} from "@/lib/supabase/server";
 import DashboardHeader from "@/components/dashboard/dashboard-header";
 import { redirect } from "next/navigation";
 
-export default async function PersonalAccountDashboard({children, params: {accountSlug}}: {children: React.ReactNode, params: {accountSlug: string}}) {
-    const supabaseClient = createClient();
+export default async function PersonalAccountDashboard(props: {children: React.ReactNode, params: Promise<{accountSlug: string}>}) {
+    const params = await props.params;
+
+    const {
+        accountSlug
+    } = params;
+
+    const {
+        children
+    } = props;
+
+    const supabaseClient = await createClient();
 
     const {data: teamAccount, error} = await supabaseClient.rpc('get_account_by_slug', {
         slug: accountSlug
@@ -30,5 +40,4 @@ export default async function PersonalAccountDashboard({children, params: {accou
             <div className="w-full p-8">{children}</div>
         </>
     )
-
 }

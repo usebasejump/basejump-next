@@ -10,7 +10,7 @@ type Props = {
 }
 
 export default async function AccountBillingStatus({ accountId, returnUrl }: Props) {
-    const supabaseClient = createClient();
+    const supabaseClient = await createClient();
 
 
     const { data, error } = await supabaseClient.functions.invoke('billing-functions', {

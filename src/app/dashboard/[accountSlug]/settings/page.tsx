@@ -2,8 +2,14 @@ import EditTeamName from "@/components/basejump/edit-team-name";
 import EditTeamSlug from "@/components/basejump/edit-team-slug";
 import { createClient } from "@/lib/supabase/server";
 
-export default async function TeamSettingsPage({ params: { accountSlug } }: { params: { accountSlug: string } }) {
-    const supabaseClient = createClient();
+export default async function TeamSettingsPage(props: { params: Promise<{ accountSlug: string }> }) {
+    const params = await props.params;
+
+    const {
+        accountSlug
+    } = params;
+
+    const supabaseClient = await createClient();
     const { data: teamAccount } = await supabaseClient.rpc('get_account_by_slug', {
         slug: accountSlug
     });

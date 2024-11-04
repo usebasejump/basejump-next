@@ -5,17 +5,18 @@ import { redirect } from "next/navigation";
 import { SubmitButton } from "@/components/ui/submit-button";
 import { Input } from "@/components/ui/input";
 
-export default function Login({
-  searchParams,
-}: {
-  searchParams: { message: string, returnUrl?: string };
-}) {
+export default async function Login(
+  props: {
+    searchParams: Promise<{ message: string, returnUrl?: string }>;
+  }
+) {
+  const searchParams = await props.searchParams;
   const signIn = async (_prevState: any, formData: FormData) => {
     "use server";
 
     const email = formData.get("email") as string;
     const password = formData.get("password") as string;
-    const supabase = createClient();
+    const supabase = await createClient();
 
     const { error } = await supabase.auth.signInWithPassword({
       email,
@@ -32,10 +33,10 @@ export default function Login({
   const signUp = async (_prevState: any, formData: FormData) => {
     "use server";
 
-    const origin = headers().get("origin");
+    const origin = (await headers()).get("origin");
     const email = formData.get("email") as string;
     const password = formData.get("password") as string;
-    const supabase = createClient();
+    const supabase = await createClient();
 
     const { error } = await supabase.auth.signUp({
       email,
