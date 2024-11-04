@@ -5,7 +5,7 @@ import { Label } from "../ui/label";
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@/components/ui/select";
 import { updateTeamMemberRole } from "@/lib/actions/members";
 import { GetAccountMembersResponse } from "@usebasejump/shared";
-import { useState } from "react";
+import { useActionState, useState } from "react";
 import { Checkbox } from "../ui/checkbox";
 import { usePathname } from "next/navigation";
 
@@ -22,6 +22,7 @@ const memberOptions = [
 
 
 export default function EditTeamMemberRoleForm({ accountId, teamMember, isPrimaryOwner }: Props) {
+  const [, updateTeamMemberRoleAction] = useActionState(updateTeamMemberRole, null)
   const [teamRole, setTeamRole] = useState(teamMember.account_role as string)
   const pathName = usePathname();
 
@@ -59,7 +60,7 @@ export default function EditTeamMemberRoleForm({ accountId, teamMember, isPrimar
         </div>
       )}
       <SubmitButton
-        formAction={updateTeamMemberRole}
+        formAction={updateTeamMemberRoleAction}
         pendingText="Updating..."
       >
         Update Role

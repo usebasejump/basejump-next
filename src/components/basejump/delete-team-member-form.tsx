@@ -1,7 +1,10 @@
+"use client"
+
 import { SubmitButton } from "../ui/submit-button"
 import { removeTeamMember } from "@/lib/actions/members";
 import { GetAccountMembersResponse } from "@usebasejump/shared";
 import { usePathname } from "next/navigation";
+import { useActionState } from 'react'
 
 type Props = {
     accountId: string;
@@ -9,6 +12,7 @@ type Props = {
 }
 
 export default function DeleteTeamMemberForm({ accountId, teamMember }: Props) {
+    const [, removeTeamMemberAction] = useActionState(removeTeamMember, null)
     const pathName = usePathname();
 
     return (
@@ -17,7 +21,7 @@ export default function DeleteTeamMemberForm({ accountId, teamMember }: Props) {
             <input type="hidden" name="userId" value={teamMember.user_id} />
             <input type="hidden" name="returnUrl" value={pathName} />
 
-            <SubmitButton variant="destructive" formAction={removeTeamMember} pendingText="Removing...">
+            <SubmitButton variant="destructive" formAction={removeTeamMemberAction} pendingText="Removing...">
                 Remove member
             </SubmitButton>
         </form>

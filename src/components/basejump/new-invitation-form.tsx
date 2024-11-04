@@ -6,6 +6,8 @@ import { createInvitation } from "@/lib/actions/invitations";
 import { useActionState } from "react";
 import fullInvitationUrl from "@/lib/full-invitation-url";
 
+// TODO: Migrate to useActionState
+
 type Props = {
     accountId: string
 }

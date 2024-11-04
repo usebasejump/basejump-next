@@ -9,7 +9,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog"
-import { useState } from "react"
+import { useActionState, useState } from "react"
 import { Trash } from "lucide-react"
 import { SubmitButton } from "../ui/submit-button"
 import { deleteInvitation } from "@/lib/actions/invitations"
@@ -34,14 +34,22 @@ export default function DeleteTeamInvitationButton({invitationId}: Props) {
             Are you sure? This cannot be undone
           </DialogDescription>
         </DialogHeader>
-        <form>
-            <input type="hidden" name="invitationId" value={invitationId} />
-            <input type="hidden" name="returnPath" value={returnPath} />
-            <SubmitButton variant="destructive" formAction={deleteInvitation} pendingText="Cancelling...">
-                Cancel invitation
-            </SubmitButton>
-        </form>
+        <Form invitationId={invitationId} returnPath={returnPath} />
       </DialogContent>
     </Dialog>
+  )
+}
+
+function Form({invitationId, returnPath}: {invitationId: string, returnPath: string}) {
+  const [, deleteInvitationAction] = useActionState(deleteInvitation, null)
+
+  return (
+    <form>
+        <input type="hidden" name="invitationId" value={invitationId} />
+        <input type="hidden" name="returnPath" value={returnPath} />
+        <SubmitButton variant="destructive" formAction={deleteInvitationAction} pendingText="Cancelling...">
+            Cancel invitation
+        </SubmitButton>
+    </form>
   )
 }

@@ -7,6 +7,8 @@ import { Label } from "../ui/label";
 import { GetAccountResponse } from "@usebasejump/shared";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "../ui/card";
 
+// TODO: Migrate to useActionState
+
 type Props = {
     account: GetAccountResponse;
 }

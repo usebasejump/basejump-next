@@ -1,10 +1,10 @@
+"use server";
+
 import { redirect } from "next/navigation";
 import { createClient } from "../supabase/server";
 import handleEdgeFunctionError from "../supabase/handle-edge-error";
 
 export async function setupNewSubscription(prevState: any, formData: FormData) {
-    "use server";
-
     const accountId = formData.get("accountId") as string;
     const returnUrl = formData.get("returnUrl") as string;
     const supabaseClient = await createClient();
@@ -28,8 +28,6 @@ export async function setupNewSubscription(prevState: any, formData: FormData) {
 };
 
 export async function manageSubscription(prevState: any, formData: FormData) {
-    "use server";
-
     const accountId = formData.get("accountId") as string;
     const returnUrl = formData.get("returnUrl") as string;
     const supabaseClient = await createClient();

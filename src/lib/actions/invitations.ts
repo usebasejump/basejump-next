@@ -5,8 +5,6 @@ import { createClient } from "../supabase/server";
 import { redirect } from "next/navigation";
 
 export async function createInvitation(prevState: any, formData: FormData): Promise<{ token?: string, message?: string}> {
-    "use server";
-
     const invitationType = formData.get("invitationType") as string;
     const accountId = formData.get("accountId") as string;
     const accountRole = formData.get("accountRole") as string;
@@ -33,8 +31,6 @@ export async function createInvitation(prevState: any, formData: FormData): Prom
 };
 
 export async function deleteInvitation(prevState: any, formData: FormData) {
-    "use server";
-
     const invitationId = formData.get("invitationId") as string;
     const returnPath = formData.get("returnPath") as string;
 
@@ -54,8 +50,6 @@ export async function deleteInvitation(prevState: any, formData: FormData) {
 };
 
 export async function acceptInvitation(prevState: any, formData: FormData) {
-    "use server";
-
     const token = formData.get("token") as string;
 
     const supabase = await createClient();

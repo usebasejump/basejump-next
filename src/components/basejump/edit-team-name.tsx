@@ -9,6 +9,7 @@ type Props = {
     account: GetAccountResponse;
 }
 
+// TODO: Migrate to useActionState
 
 export default function EditTeamName({ account }: Props) {
 
