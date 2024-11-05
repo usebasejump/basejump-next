@@ -1,12 +1,11 @@
 'use client'
+
 import { SubmitButton } from "../ui/submit-button"
 import { Label } from "../ui/label";
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectGroup, SelectLabel, SelectItem } from "@/components/ui/select";
 import { createInvitation } from "@/lib/actions/invitations";
 import { useActionState } from "react";
 import fullInvitationUrl from "@/lib/full-invitation-url";
-
-// TODO: Migrate to useActionState
 
 type Props = {
     accountId: string
@@ -29,7 +28,6 @@ const initialState = {
 };
 
 export default function NewInvitationForm({ accountId }: Props) {
-
     const [state, formAction] = useActionState(createInvitation, initialState)
 
     return (
@@ -76,7 +74,7 @@ export default function NewInvitationForm({ accountId }: Props) {
                         </Select>
                     </div>
                     <SubmitButton
-                        formAction={async (prevState: any, formData: FormData) => formAction(formData)}
+                        formAction={formAction}
                         errorMessage={state?.message}
                         pendingText="Creating..."
                     >

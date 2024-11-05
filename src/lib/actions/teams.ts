@@ -15,6 +15,8 @@ export async function createTeam(prevState: any, formData: FormData) {
 
     if (error) {
         return {
+            name,
+            slug,
             message: error.message
         };
     }
@@ -33,11 +35,10 @@ export async function editTeamName(prevState: any, formData: FormData) {
         account_id: accountId
     });
 
-    if (error) {
-        return {
-            message: error.message
-        };
-    }
+    return {
+        message: error ? error.message : null,
+        name
+    };
 };
 
 export async function editTeamSlug(prevState: any, formData: FormData) {
@@ -52,7 +53,8 @@ export async function editTeamSlug(prevState: any, formData: FormData) {
 
     if (error) {
         return {
-            message: error.message
+            message: error.message,
+            slug
         };
     }
 

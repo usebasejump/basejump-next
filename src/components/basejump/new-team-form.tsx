@@ -2,11 +2,14 @@ import { Input } from "@/components/ui/input"
 import { SubmitButton } from "../ui/submit-button"
 import { createTeam } from "@/lib/actions/teams";
 import { Label } from "../ui/label";
-
-// TODO: Migrate to useActionState
+import {useActionState} from 'react';
 
 export default function NewTeamForm() {
-
+    const [state, createTeamAction] = useActionState(createTeam, {
+        name: '',
+        slug: '',
+        message: null
+      });
 
     return (
         <form className="animate-in flex-1 flex flex-col w-full justify-center gap-y-6 text-foreground">
@@ -18,6 +21,7 @@ export default function NewTeamForm() {
                     name="name"
                     placeholder="My Team"
                     required
+                    defaultValue={state.name}
                 />
             </div>
             <div className="flex flex-col gap-y-2">
@@ -32,11 +36,13 @@ export default function NewTeamForm() {
                         name="slug"
                         placeholder="my-team"
                         required
+                        defaultValue={state.slug}
                     />
                 </div>
             </div>
             <SubmitButton
-                formAction={createTeam}
+                formAction={createTeamAction}
+                errorMessage={state.message}
                 pendingText="Creating..."
             >
                 Create team
