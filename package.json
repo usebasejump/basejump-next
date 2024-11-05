@@ -4,7 +4,8 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "test": "tsc --noEmit"
+    "test": "tsc --noEmit && vitest",
+    "test-watch": "vitest"
   },
   "dependencies": {
     "@radix-ui/react-checkbox": "^1.1.2",
@@ -37,10 +38,16 @@
     "typescript": "5.3.3"
   },
   "devDependencies": {
+    "@testing-library/dom": "^10.4.0",
+    "@testing-library/react": "^16.0.1",
     "@types/node": "20.11.5",
     "@types/react": "npm:types-react@19.0.0-rc.1",
     "@types/react-dom": "npm:types-react-dom@19.0.0-rc.1",
-    "encoding": "^0.1.13"
+    "@vitejs/plugin-react": "^4.3.3",
+    "encoding": "^0.1.13",
+    "jsdom": "^25.0.1",
+    "vitest": "^2.1.4",
+    "vitest-tsconfig-paths": "^3.4.1"
   },
   "packageManager": "yarn@1.22.19+sha1.4ba7fc5c6e704fce2066ecbfb0b0d8976fe62447",
   "resolutions": {
