@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { Input } from "@/components/ui/input";
-import { useCallback, useState } from 'react'
+import { type FormEventHandler, type MouseEventHandler, useCallback, useState } from 'react'
 import { signIn, signUp } from './actions'
 import { useSearchParams } from 'next/navigation'
 import { ErrorMessage } from '@/components/ui/error-message'
@@ -24,21 +24,21 @@ export default function Login() {
     password: ''
   })
 
-  const onSubmit = useCallback(async function onSubmit(event) {
+  const onSubmit: FormEventHandler<HTMLFormElement> = useCallback(async function onSubmit(event) {
     event.preventDefault();
 
     setIsPending(true)
-    const formData = new FormData(event.target)
+    const formData = new FormData(event.target as HTMLFormElement)
     const result = await signIn(formData)
     setMessage(result.message ?? null)
     setIsPending(false)
   }, [])
   
-  const onSignUp = useCallback(async function onSignUp(event) {
+  const onSignUp: MouseEventHandler<HTMLButtonElement> = useCallback(async function onSignUp(event) {
     event.preventDefault();
 
     setIsPending(true)
-    const formData = new FormData(event.target.closest('form'))
+    const formData = new FormData((event.target as HTMLButtonElement).closest('form')!)
     const result = await signUp(formData)
     setMessage(result.message ?? null)
     setIsPending(false)

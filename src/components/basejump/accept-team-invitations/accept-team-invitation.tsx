@@ -1,8 +1,7 @@
-import { acceptInvitation } from "@/lib/actions/invitations";
 import { createClient } from "@/lib/supabase/server";
-import { Alert } from "../ui/alert";
-import { Card, CardContent } from "../ui/card";
-import { SubmitButton } from "../ui/submit-button";
+import { Alert } from "../../ui/alert";
+import { Card, CardContent } from "../../ui/card";
+import { AcceptInvitationForm } from './AcceptInvitationForm'
 
 type Props = {
     token: string;
@@ -21,10 +20,7 @@ export default async function AcceptTeamInvitation({ token }: Props) {
                     <h1 className="text-xl font-bold">{invitation.account_name}</h1>
                 </div>
                 {Boolean(invitation.active) ? (
-                    <form>
-                        <input type="hidden" name="token" value={token} />
-                        <SubmitButton formAction={acceptInvitation} pendingText="Accepting invitation...">Accept invitation</SubmitButton>
-                    </form>
+                    <AcceptInvitationForm token={token} />
                 ) : (
                     <Alert variant="destructive">
                         This invitation has been deactivated. Please contact the account owner for a new invitation.

@@ -14,7 +14,7 @@ type Props = {
 
 export default function EditTeamSlug({ account }: Props) {
     const [state, editTeamSlugAction] = useActionState(editTeamSlug, {
-        message: null,
+        message: '',
         slug: account.slug
       });
 

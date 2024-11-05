@@ -3,7 +3,7 @@
 import { redirect } from "next/navigation";
 import { createClient } from "../supabase/server";
 
-export async function createTeam(prevState: any, formData: FormData) {
+export async function createTeam(previousState: any, formData: FormData) {
     const name = formData.get("name") as string;
     const slug = formData.get("slug") as string;
     const supabase = await createClient();
@@ -25,7 +25,7 @@ export async function createTeam(prevState: any, formData: FormData) {
 };
 
 
-export async function editTeamName(prevState: any, formData: FormData) {
+export async function editTeamName(previousState: any, formData: FormData) {
     const name = formData.get("name") as string;
     const accountId = formData.get("accountId") as string;
     const supabase = await createClient();
@@ -36,12 +36,12 @@ export async function editTeamName(prevState: any, formData: FormData) {
     });
 
     return {
-        message: error ? error.message : null,
+        message: error ? error.message : '',
         name
     };
 };
 
-export async function editTeamSlug(prevState: any, formData: FormData) {
+export async function editTeamSlug(previousState: any, formData: FormData) {
     const slug = formData.get("slug") as string;
     const accountId = formData.get("accountId") as string;
     const supabase = await createClient();

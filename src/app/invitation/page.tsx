@@ -1,4 +1,4 @@
-import AcceptTeamInvitation from "@/components/basejump/accept-team-invitation";
+import AcceptTeamInvitation from "@/components/basejump/accept-team-invitations/accept-team-invitation";
 import { redirect } from "next/navigation"
 
 export default async function AcceptInvitationPage(props: {searchParams: Promise<{token?: string}>}) {

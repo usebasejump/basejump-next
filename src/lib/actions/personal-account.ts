@@ -13,7 +13,7 @@ export async function editPersonalAccountName(prevState: any, formData: FormData
     });
 
     return {
-        message: error?.message ?? null,
+        message: error?.message ?? '',
         name
     };
 };

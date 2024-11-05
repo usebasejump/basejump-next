@@ -49,7 +49,7 @@ export async function deleteInvitation(prevState: any, formData: FormData) {
 
 };
 
-export async function acceptInvitation(prevState: any, formData: FormData) {
+export async function acceptInvitation(previousState: any, formData: FormData) {
     const token = formData.get("token") as string;
 
     const supabase = await createClient();

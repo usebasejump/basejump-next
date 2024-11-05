@@ -8,7 +8,7 @@ export default function NewTeamForm() {
     const [state, createTeamAction] = useActionState(createTeam, {
         name: '',
         slug: '',
-        message: null
+        message: ''
       });
 
     return (

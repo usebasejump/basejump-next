@@ -8,7 +8,7 @@ import { ErrorMessage } from "./error-message";
 type Props = Omit<ComponentProps<typeof Button>, 'formAction'> & {
   pendingText?: string;
   formAction: (formData: FormData) => void;
-  errorMessage?: string | null;
+  errorMessage?: string;
 };
 
 export function SubmitButton({ children, formAction, errorMessage, pendingText = "Submitting...", ...props }: Props) {

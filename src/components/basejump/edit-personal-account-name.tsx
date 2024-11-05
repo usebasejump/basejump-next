@@ -15,7 +15,7 @@ type Props = {
 
 export default function EditPersonalAccountName({ account }: Props) {
     const [state, formAction] = useActionState(editPersonalAccountName, {
-        message: null,
+        message: '',
         name: account.name
       });
 
