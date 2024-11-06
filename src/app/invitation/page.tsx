@@ -1,7 +1,8 @@
-import AcceptTeamInvitation from "@/components/basejump/accept-team-invitation";
+import AcceptTeamInvitation from "@/components/basejump/accept-team-invitations/accept-team-invitation";
 import { redirect } from "next/navigation"
 
-export default async function AcceptInvitationPage({searchParams}: {searchParams: {token?: string}}) {
+export default async function AcceptInvitationPage(props: {searchParams: Promise<{token?: string}>}) {
+    const searchParams = await props.searchParams;
 
     if (!searchParams.token) {
        redirect("/");

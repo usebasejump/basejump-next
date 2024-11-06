@@ -1,9 +1,10 @@
 'use client'
+
 import { SubmitButton } from "../ui/submit-button"
 import { Label } from "../ui/label";
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectGroup, SelectLabel, SelectItem } from "@/components/ui/select";
 import { createInvitation } from "@/lib/actions/invitations";
-import { useFormState } from "react-dom";
+import { useActionState } from "react";
 import fullInvitationUrl from "@/lib/full-invitation-url";
 
 type Props = {
@@ -27,8 +28,7 @@ const initialState = {
 };
 
 export default function NewInvitationForm({ accountId }: Props) {
-
-    const [state, formAction] = useFormState(createInvitation, initialState)
+    const [state, formAction] = useActionState(createInvitation, initialState)
 
     return (
         <form className="animate-in flex-1 flex flex-col w-full justify-center gap-y-6 text-foreground">
@@ -74,7 +74,7 @@ export default function NewInvitationForm({ accountId }: Props) {
                         </Select>
                     </div>
                     <SubmitButton
-                        formAction={async (prevState: any, formData: FormData) => formAction(formData)}
+                        formAction={formAction}
                         errorMessage={state?.message}
                         pendingText="Creating..."
                     >

@@ -3,7 +3,7 @@ import DashboardHeader from "@/components/dashboard/dashboard-header";
 
 export default async function PersonalAccountDashboard({children}: {children: React.ReactNode}) {
 
-    const supabaseClient = createClient();
+    const supabaseClient = await createClient();
 
     const {data: personalAccount, error} = await supabaseClient.rpc('get_personal_account');
 

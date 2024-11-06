@@ -1,56 +1,48 @@
+'use client';
+
 import Link from "next/link";
-import { headers } from "next/headers";
-import { createClient } from "@/lib/supabase/server";
-import { redirect } from "next/navigation";
-import { SubmitButton } from "@/components/ui/submit-button";
 import { Input } from "@/components/ui/input";
+import { type FormEventHandler, type MouseEventHandler, useCallback, useState } from 'react'
+import { signIn, signUp } from './actions'
+import { useSearchParams } from 'next/navigation'
+import { ErrorMessage } from '@/components/ui/error-message'
+import { Button } from "@/components/ui/button";
 
-export default function Login({
-  searchParams,
-}: {
-  searchParams: { message: string, returnUrl?: string };
-}) {
-  const signIn = async (_prevState: any, formData: FormData) => {
-    "use server";
+export default function Login() {
+  const searchParams = useSearchParams();
 
-    const email = formData.get("email") as string;
-    const password = formData.get("password") as string;
-    const supabase = createClient();
+  const [isPending, setIsPending] = useState<boolean>(false)
+  const [message, setMessage] = useState<string | null>(null)
+  
+  const [state, setState] = useState<{
+    message: string | null,
+    email: string,
+    password: string
+  }>({
+    message: null,
+    email: '',
+    password: ''
+  })
 
-    const { error } = await supabase.auth.signInWithPassword({
-      email,
-      password
-    });
+  const onSubmit: FormEventHandler<HTMLFormElement> = useCallback(async function onSubmit(event) {
+    event.preventDefault();
 
-    if (error) {
-      return redirect(`/login?message=Could not authenticate user&returnUrl=${searchParams.returnUrl}`);
-    }
+    setIsPending(true)
+    const formData = new FormData(event.target as HTMLFormElement)
+    const result = await signIn(formData)
+    setMessage(result.message ?? null)
+    setIsPending(false)
+  }, [])
+  
+  const onSignUp: MouseEventHandler<HTMLButtonElement> = useCallback(async function onSignUp(event) {
+    event.preventDefault();
 
-    return redirect(searchParams.returnUrl || "/dashboard");
-  };
-
-  const signUp = async (_prevState: any, formData: FormData) => {
-    "use server";
-
-    const origin = headers().get("origin");
-    const email = formData.get("email") as string;
-    const password = formData.get("password") as string;
-    const supabase = createClient();
-
-    const { error } = await supabase.auth.signUp({
-      email,
-      password,
-      options: {
-        emailRedirectTo: `${origin}/auth/callback?returnUrl=${searchParams.returnUrl}`,
-      },
-    });
-
-    if (error) {
-      return redirect(`/login?message=Could not authenticate user&returnUrl=${searchParams.returnUrl}`);
-    }
-
-    return redirect(`/login?message=Check email to continue sign in process&returnUrl=${searchParams.returnUrl}`);
-  };
+    setIsPending(true)
+    const formData = new FormData((event.target as HTMLButtonElement).closest('form')!)
+    const result = await signUp(formData)
+    setMessage(result.message ?? null)
+    setIsPending(false)
+  }, [])
 
   return (
     <div className="flex-1 flex flex-col w-full px-8 sm:max-w-md justify-center gap-2">
@@ -75,7 +67,8 @@ export default function Login({
         Back
       </Link>
 
-      <form className="animate-in flex-1 flex flex-col w-full justify-center gap-2 text-foreground">
+      <form onSubmit={onSubmit} className="animate-in flex-1 flex flex-col w-full justify-center gap-2 text-foreground">
+        <input name="returnUrl" type="hidden" value={searchParams.get('returnUrl') ?? ''} />
         <label className="text-md" htmlFor="email">
           Email
         </label>
@@ -93,22 +86,25 @@ export default function Login({
           placeholder="••••••••"
           required
         />
-        <SubmitButton
-          formAction={signIn}
-          pendingText="Signing In..."
-        >
-          Sign In
-        </SubmitButton>
-        <SubmitButton
-          formAction={signUp}
-          variant="outline"
-          pendingText="Signing Up..."
-        >
-          Sign Up
-        </SubmitButton>
-        {searchParams?.message && (
+        <div className="flex flex-col gap-y-4 w-full">
+          {Boolean(state.message) && <ErrorMessage errorMessage={state.message!} />}
+          <div>
+            <Button type="submit" aria-disabled={isPending}>
+              {isPending ? "Signing In..." : "Sign In"}
+            </Button>
+          </div>
+        </div>
+        <div className="flex flex-col gap-y-4 w-full">
+          {Boolean(state.message) && <ErrorMessage errorMessage={state.message!} />}
+          <div>
+            <Button type="submit" aria-disabled={isPending} variant="outline" onClick={onSignUp}>
+              {isPending ? "Signing Up..." : "Sign Up"}
+            </Button>
+          </div>
+        </div>
+        {message && (
           <p className="mt-4 p-4 bg-foreground/10 text-foreground text-center">
-            {searchParams.message}
+            {message}
           </p>
         )}
       </form>

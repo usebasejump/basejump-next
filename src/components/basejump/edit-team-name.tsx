@@ -1,16 +1,22 @@
+"use client"
+
 import { Input } from "@/components/ui/input"
 import { SubmitButton } from "../ui/submit-button"
 import { editTeamName } from "@/lib/actions/teams";
 import { Label } from "../ui/label";
 import { GetAccountResponse } from "@usebasejump/shared";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "../ui/card";
+import { useActionState} from "react";
 
 type Props = {
     account: GetAccountResponse;
 }
 
-
 export default function EditTeamName({ account }: Props) {
+    const [state, editTeamNameAction] = useActionState(editTeamName, {
+        message: '',
+        name: account.name
+      });
 
     return (
         <Card>
@@ -28,7 +34,7 @@ export default function EditTeamName({ account }: Props) {
                             Team Name
                         </Label>
                         <Input
-                            defaultValue={account.name}
+                            defaultValue={state.name}
                             name="name"
                             placeholder="My Team"
                             required
@@ -37,7 +43,8 @@ export default function EditTeamName({ account }: Props) {
                 </CardContent>
                 <CardFooter>
                     <SubmitButton
-                        formAction={editTeamName}
+                        formAction={editTeamNameAction}
+                        errorMessage={state.message}
                         pendingText="Updating..."
                     >
                         Save

@@ -1,10 +1,10 @@
 import {createClient} from "@/lib/supabase/server";
-import AccountBillingStatus from "@/components/basejump/account-billing-status";
+import AccountBillingStatus from "@/components/basejump/account-billing-status/account-billing-status";
 
 const returnUrl = process.env.NEXT_PUBLIC_URL as string;
 
 export default async function PersonalAccountBillingPage() {
-    const supabaseClient = createClient();
+    const supabaseClient = await createClient();
     const {data: personalAccount} = await supabaseClient.rpc('get_personal_account');
 
 

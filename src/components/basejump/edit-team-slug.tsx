@@ -6,12 +6,17 @@ import { editTeamSlug } from "@/lib/actions/teams";
 import { Label } from "../ui/label";
 import { GetAccountResponse } from "@usebasejump/shared";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "../ui/card";
+import { useActionState} from "react";
 
 type Props = {
     account: GetAccountResponse;
 }
 
 export default function EditTeamSlug({ account }: Props) {
+    const [state, editTeamSlugAction] = useActionState(editTeamSlug, {
+        message: '',
+        slug: account.slug
+      });
 
     return (
         <Card>
@@ -33,7 +38,7 @@ export default function EditTeamSlug({ account }: Props) {
                                 https://your-app.com/
                             </span>
                             <Input
-                                defaultValue={account.slug}
+                                defaultValue={state.slug}
                                 name="slug"
                                 placeholder="my-team"
                                 required
@@ -43,7 +48,8 @@ export default function EditTeamSlug({ account }: Props) {
                 </CardContent>
                 <CardFooter>
                     <SubmitButton
-                        formAction={editTeamSlug}
+                        formAction={editTeamSlugAction}
+                        errorMessage={state.message}
                         pendingText="Updating..."
                     >
                         Save

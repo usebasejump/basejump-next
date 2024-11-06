@@ -1,8 +1,9 @@
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "../ui/card";
-import { Alert, AlertDescription } from "../ui/alert";
+"use server"
+
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "../../ui/card";
+import { Alert, AlertDescription } from "../../ui/alert";
 import { createClient } from "@/lib/supabase/server";
-import { SubmitButton } from "../ui/submit-button";
-import { manageSubscription, setupNewSubscription } from "@/lib/actions/billing";
+import { Actions } from './actions'
 
 type Props = {
     accountId: string;
@@ -10,8 +11,7 @@ type Props = {
 }
 
 export default async function AccountBillingStatus({ accountId, returnUrl }: Props) {
-    const supabaseClient = createClient();
-
+    const supabaseClient = await createClient();
 
     const { data, error } = await supabaseClient.functions.invoke('billing-functions', {
         body: {
@@ -44,17 +44,9 @@ export default async function AccountBillingStatus({ accountId, returnUrl }: Pro
                 )}
 
             </CardContent>
-            {Boolean(data?.billing_enabled) && (
+            {(Boolean(data?.billing_enabled)) && (
                 <CardFooter>
-                    <form className="w-full">
-                        <input type="hidden" name="accountId" value={accountId} />
-                        <input type="hidden" name="returnUrl" value={returnUrl} />
-                        {data.status === 'not_setup' ? (
-                            <SubmitButton pendingText="Loading..." formAction={setupNewSubscription}>Setup your Subscription</SubmitButton>
-                        ) : (
-                            <SubmitButton pendingText="Loading..." formAction={manageSubscription}>Manage Subscription</SubmitButton>
-                        )}
-                    </form>
+                    <Actions accountId={accountId} returnUrl={returnUrl} status={data.status} />
                 </CardFooter>
             )}
         </Card>

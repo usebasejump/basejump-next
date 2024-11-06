@@ -3,8 +3,14 @@ import ManageTeamMembers from "@/components/basejump/manage-team-members";
 import ManageTeamInvitations from "@/components/basejump/manage-team-invitations";
 import { Alert } from "@/components/ui/alert";
 
-export default async function TeamMembersPage({params: {accountSlug}}: {params: {accountSlug: string}}) {
-    const supabaseClient = createClient();
+export default async function TeamMembersPage(props: {params: Promise<{accountSlug: string}>}) {
+    const params = await props.params;
+
+    const {
+        accountSlug
+    } = params;
+
+    const supabaseClient = await createClient();
     const {data: teamAccount} = await supabaseClient.rpc('get_account_by_slug', {
         slug: accountSlug
     });
